@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8324934953296686787}
   - component: {fileID: 8324934953296686785}
-  - component: {fileID: 8324934953296686784}
   - component: {fileID: 7822493206537994975}
+  - component: {fileID: 7041813326349845428}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -70,8 +70,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8324934953296686784
-BoxCollider:
+--- !u!33 &7822493206537994975
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324934953296686786}
+  m_Mesh: {fileID: -8545447256379345787, guid: 6379409f48e4ba84497b25129f20b5a1, type: 3}
+--- !u!64 &7041813326349845428
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -80,16 +88,9 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &7822493206537994975
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8324934953296686786}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
   m_Mesh: {fileID: -8545447256379345787, guid: 6379409f48e4ba84497b25129f20b5a1, type: 3}
 --- !u!1 &8324934953317594058
 GameObject:
@@ -228,6 +229,8 @@ MonoBehaviour:
     motor: 1
     steering: 0
   m_rigidBody: {fileID: 8324934953732272965}
+  m_balanceSpringF: {fileID: 0}
+  m_balanceSpringR: {fileID: 0}
   maxMotorTorque: 250
   maxSteeringAngle: 10
   m_maxFuel: 100
