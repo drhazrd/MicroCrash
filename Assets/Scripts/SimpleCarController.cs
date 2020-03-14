@@ -15,8 +15,6 @@ public class SimpleCarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos;
     public Rigidbody m_rigidBody;
-    public SpringJoint m_balanceSpringF; //Forward balance spring
-    public SpringJoint m_balanceSpringR; //Rear balance spring
 
     public float maxMotorTorque;
     public float maxSteeringAngle;
@@ -32,15 +30,7 @@ public class SimpleCarController : MonoBehaviour
 
     public Vector3 m_jumpForce;
     public Vector3 m_boostForce;
-
-    /// <summary>
-    /// Runs at startup
-    /// </summary>
-    public void Start()
-    {
-        m_rigidBody.centerOfMass = new Vector3(0, -0.15f, 0);
-    }
-
+    
 
     // finds the corresponding visual wheel
     // correctly applies the transform
@@ -69,19 +59,15 @@ public class SimpleCarController : MonoBehaviour
             m_fuel -= m_jumpFuelDrain;
             m_jumpCooldown = m_maxJumpCooldown;
             m_rigidBody.velocity = new Vector3(m_rigidBody.velocity.x, 0, m_rigidBody.velocity.z);
-            m_rigidBody.AddForce(m_jumpForce.y * transform.up, ForceMode.Impulse);
+            m_rigidBody.AddForce(m_jumpForce, ForceMode.Impulse);
         }
         else if(m_jumpCooldown > 0)
         {
             m_jumpCooldown -= Time.deltaTime;
         }
 
-        //Update balance spring positions
-        m_balanceSpringF.connectedAnchor = transform.position + m_balanceSpringF.anchor;
-        m_balanceSpringR.connectedAnchor = transform.position + m_balanceSpringR.anchor;
-
         //Handle reset
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if(Input.GetKeyDown(KeyCode.LeftControl))
         {
             TESTRESET();
         }
@@ -125,7 +111,7 @@ public class SimpleCarController : MonoBehaviour
         //If the player is holding the boost button, apply the boost force and drain fuel
         if(Input.GetKey(KeyCode.W) && m_fuel > 0)
         {
-            m_rigidBody.AddForce(m_boostForce.z * transform.forward, ForceMode.Force);
+            m_rigidBody.AddForce(m_boostForce, ForceMode.Force);
             m_fuel -= m_boostFuelDrainRate * Time.deltaTime;
         }
     }
