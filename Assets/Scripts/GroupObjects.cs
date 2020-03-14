@@ -1,17 +1,16 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class GroupObjects : MonoBehaviour
+public static class GroupObjects
 {
-    // Start is called before the first frame update
-    void Start()
+    [MenuItem("GameObject/Group Selected %g")]
+    private static void GroupSelected()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (!Selection.activeTransform) return;
+        var go = new GameObject(Selection.activeTransform.name + " Group");
+        Undo.RegisterCreatedObjectUndo(go, "Group Selected");
+        go.transform.SetParent(Selection.activeTransform.parent, false);
+        foreach (var transform in Selection.transforms) Undo.SetTransformParent(transform, go.transform, "Group Selected");
+        Selection.activeGameObject = go;
     }
 }

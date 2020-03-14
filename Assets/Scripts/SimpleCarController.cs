@@ -58,7 +58,7 @@ public class SimpleCarController : MonoBehaviour
         {
             m_fuel -= m_jumpFuelDrain;
             m_jumpCooldown = m_maxJumpCooldown;
-            m_rigidBody.velocity = new Vector3(m_rigidBody.velocity.x, 0, m_rigidBody.velocity.z)
+            m_rigidBody.velocity = new Vector3(m_rigidBody.velocity.x, 0, m_rigidBody.velocity.z);
             m_rigidBody.AddForce(m_jumpForce, ForceMode.Impulse);
         }
         else if(m_jumpCooldown > 0)
