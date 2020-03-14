@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 77944349}
   - component: {fileID: 77944348}
   - component: {fileID: 77944347}
+  - component: {fileID: 77944350}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -203,6 +204,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &77944350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77944346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4189e52c47ef24a807457f83edf22c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1348053593}
+  mainCamera: {fileID: 77944348}
+  camPiviot: {fileID: 77944349}
+  playerPosition: {x: 0, y: 0, z: 0}
+  cameraOffset: {x: 0, y: -0.65, z: 1.46}
+  viewAngleX: 6.8
+  viewAngleY: 0
+  viewAngleZ: 0
 --- !u!1 &384829821
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,15 +497,9 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 33.994003, y: 114.66601, z: 130.289}
---- !u!145 &1348053590 stripped
-SpringJoint:
-  m_CorrespondingSourceObject: {fileID: 8297271140124239057, guid: 4c7279bee467c8e49956ef84f3f48171,
-    type: 3}
-  m_PrefabInstance: {fileID: 7004408134258223636}
-  m_PrefabAsset: {fileID: 0}
---- !u!145 &1348053591 stripped
-SpringJoint:
-  m_CorrespondingSourceObject: {fileID: 7004408132911284291, guid: 4c7279bee467c8e49956ef84f3f48171,
+--- !u!4 &1348053593 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7004408132911284301, guid: 4c7279bee467c8e49956ef84f3f48171,
     type: 3}
   m_PrefabInstance: {fileID: 7004408134258223636}
   m_PrefabAsset: {fileID: 0}
@@ -555,55 +570,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7004408132911284290, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_balanceSpringF
-      value: 
-      objectReference: {fileID: 1348053591}
-    - target: {fileID: 7004408132911284290, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_balanceSpringR
-      value: 
-      objectReference: {fileID: 1348053590}
     - target: {fileID: 7004408132911284291, guid: 4c7279bee467c8e49956ef84f3f48171,
         type: 3}
       propertyPath: m_Spring
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7004408132911284291, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_Anchor.z
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7004408132911284291, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7004408132911284291, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_AutoConfigureConnectedAnchor
-      value: 0
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 8297271140124239057, guid: 4c7279bee467c8e49956ef84f3f48171,
         type: 3}
       propertyPath: m_Spring
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8297271140124239057, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_Anchor.z
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8297271140124239057, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8297271140124239057, guid: 4c7279bee467c8e49956ef84f3f48171,
-        type: 3}
-      propertyPath: m_AutoConfigureConnectedAnchor
-      value: 0
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c7279bee467c8e49956ef84f3f48171, type: 3}
