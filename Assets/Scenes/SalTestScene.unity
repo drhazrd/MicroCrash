@@ -558,5 +558,20 @@ PrefabInstance:
       propertyPath: m_boostForce.z
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 8324934953732272968, guid: 93032e9faab425d438d7e0b2729874ed,
+        type: 3}
+      propertyPath: m_boostFuelDrainRate
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324934953732272968, guid: 93032e9faab425d438d7e0b2729874ed,
+        type: 3}
+      propertyPath: m_jumpFuelDrain
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324934953732272968, guid: 93032e9faab425d438d7e0b2729874ed,
+        type: 3}
+      propertyPath: m_maxJumpCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93032e9faab425d438d7e0b2729874ed, type: 3}

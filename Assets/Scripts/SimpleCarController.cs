@@ -18,9 +18,16 @@ public class SimpleCarController : MonoBehaviour
 
     public float maxMotorTorque;
     public float maxSteeringAngle;
+
     public float m_maxFuel;
     public float m_fuel;
-    public float m_fuelDrainRate;
+    public float m_boostFuelDrainRate;
+    public float m_jumpFuelDrain;
+
+    public float m_maxJumpCooldown;
+    public float m_jumpCooldown;
+    
+
     public Vector3 m_jumpForce;
     public Vector3 m_boostForce;
     
@@ -47,9 +54,22 @@ public class SimpleCarController : MonoBehaviour
     public void Update()
     {
         //Handle jump
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && m_fuel >= m_jumpFuelDrain-5 && m_jumpCooldown <= 0)
         {
+            m_fuel -= m_jumpFuelDrain;
+            m_jumpCooldown = m_maxJumpCooldown;
+            m_rigidBody.velocity = new Vector3(m_rigidBody.velocity.x, 0, m_rigidBody.velocity.z)
             m_rigidBody.AddForce(m_jumpForce, ForceMode.Impulse);
+        }
+        else if(m_jumpCooldown > 0)
+        {
+            m_jumpCooldown -= Time.deltaTime;
+        }
+
+        //Handle reset
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            TESTRESET();
         }
     }
 
@@ -92,7 +112,18 @@ public class SimpleCarController : MonoBehaviour
         if(Input.GetKey(KeyCode.W) && m_fuel > 0)
         {
             m_rigidBody.AddForce(m_boostForce, ForceMode.Force);
-            m_fuel -= m_fuelDrainRate * Time.deltaTime;
+            m_fuel -= m_boostFuelDrainRate * Time.deltaTime;
         }
+    }
+
+    /// <summary>
+    /// Simple test function that resets the object
+    /// </summary>
+    public void TESTRESET()
+    {
+        m_fuel = m_maxFuel;
+        m_rigidBody.velocity = Vector3.zero;
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 }
