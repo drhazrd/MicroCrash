@@ -567,32 +567,37 @@ PrefabInstance:
     - target: {fileID: 6459621205036875754, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: maxMotorTorque
-      value: 400
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 6459621205036875754, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: m_maxBrakeTorque
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6459621205036875754, guid: 5a755dca39db79a40800397c26c29152,
+        type: 3}
+      propertyPath: maxSteeringAngle
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6459621203213884255, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6459621204117709255, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6459621204335935338, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6459621204928884676, guid: 5a755dca39db79a40800397c26c29152,
         type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1201389855, guid: 5a755dca39db79a40800397c26c29152, type: 3}
       propertyPath: cameras.Array.data[0]._camera

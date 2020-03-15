@@ -100,13 +100,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607354199}
-  m_LocalRotation: {x: 0.09222439, y: 5.2386895e-10, z: 0.0000000032962926, w: 0.99573827}
-  m_LocalPosition: {x: -0, y: 1.51, z: -0.25}
+  m_LocalRotation: {x: 0.17685701, y: 8.731151e-10, z: 0.0000000035258079, w: 0.9842366}
+  m_LocalPosition: {x: -0, y: 2.74, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6459621205036875749}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 10.583, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20.373001, y: 0, z: 0}
 --- !u!1 &746142266
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +514,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -576,7 +576,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -638,7 +638,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -731,7 +731,7 @@ WheelCollider:
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 0.5
-    m_Stiffness: 1
+    m_Stiffness: 4
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
@@ -822,8 +822,9 @@ MonoBehaviour:
   m_centerOfMass: {fileID: 509866971544618964}
   m_balanceSpringF: {fileID: 6459621205036875755}
   m_balanceSpringR: {fileID: 5455076792609135481}
-  maxMotorTorque: 250
-  maxSteeringAngle: 10
+  maxMotorTorque: 2500
+  m_maxBrakeTorque: 100
+  maxSteeringAngle: 20
   m_maxFuel: 100
   m_fuel: 100
   m_boostFuelDrainRate: 16
@@ -900,7 +901,7 @@ MonoBehaviour:
     inputMouseY: Mouse Y
     inputMouseScrollWheel: Mouse ScrollWheel
     cameraSwitchKey: 99
-    camerasUpdateMode: 2
+    camerasUpdateMode: 1
     ajustTheLayers: 1
     firstPerson:
       sensibilityX: 10
@@ -915,9 +916,9 @@ MonoBehaviour:
       invertYInput: 0
     followPlayer:
       ignoreCollision: 0
-      displacementSpeed: 1
+      displacementSpeed: 8
       customLookAt: 1
-      spinSpeedCustomLookAt: 1
+      spinSpeedCustomLookAt: 5
       useScrool: 1
       scroolSpeed: 2
       minDistance: 3.1
