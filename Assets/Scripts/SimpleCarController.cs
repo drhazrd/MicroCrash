@@ -15,10 +15,9 @@ public class SimpleCarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos;
     public Rigidbody m_rigidBody;
+    public Transform m_centerOfMass;
     public SpringJoint m_balanceSpringF; //Forward balance spring
     public SpringJoint m_balanceSpringR; //Rear balance spring
-
-    public Transform m_test;
 
     public float maxMotorTorque;
     public float maxSteeringAngle;
@@ -40,7 +39,14 @@ public class SimpleCarController : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        m_rigidBody.centerOfMass = new Vector3(0, -0.15f, 0);
+        if (m_centerOfMass != null)
+        {
+            m_rigidBody.centerOfMass = transform.InverseTransformPoint(m_centerOfMass.position);
+        }
+        else
+        {
+            m_rigidBody.centerOfMass = Vector3.zero; //new Vector3(0, -0.15f, 0);
+        }
 
         UpdateBalanceSprings();
     }
@@ -147,9 +153,17 @@ public class SimpleCarController : MonoBehaviour
     /// </summary>
     public void TESTRESET()
     {
+        m_maxFuel = 100000;
+        m_boostFuelDrainRate = 0;
+        m_jumpFuelDrain = 0;
+        m_maxJumpCooldown = 0;
+
         m_fuel = m_maxFuel;
         m_rigidBody.velocity = Vector3.zero;
+        m_rigidBody.angularVelocity = Vector3.zero;
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        UpdateBalanceSprings();
     }
 }
