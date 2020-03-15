@@ -41,6 +41,8 @@ public class SimpleCarController : MonoBehaviour
     public void Start()
     {
         m_rigidBody.centerOfMass = new Vector3(0, -0.15f, 0);
+
+        UpdateBalanceSprings();
     }
 
 
@@ -78,10 +80,7 @@ public class SimpleCarController : MonoBehaviour
             m_jumpCooldown -= Time.deltaTime;
         }
 
-        //Update balance spring positions
-        Vector3 springForward = Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
-        m_balanceSpringF.connectedAnchor = transform.position + (m_balanceSpringF.anchor.z * springForward);
-        m_balanceSpringR.connectedAnchor = transform.position + (m_balanceSpringR.anchor.z * springForward);
+        UpdateBalanceSprings();
 
         //Handle reset
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -131,6 +130,16 @@ public class SimpleCarController : MonoBehaviour
             m_rigidBody.AddForce(m_boostForce.z * transform.forward, ForceMode.Force);
             m_fuel -= m_boostFuelDrainRate * Time.deltaTime;
         }
+    }
+
+    /// <summary>
+    /// Update balance spring positions
+    /// </summary>
+    public void UpdateBalanceSprings()
+    {
+        Vector3 springForward = Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
+        m_balanceSpringF.connectedAnchor = transform.position + (m_balanceSpringF.anchor.z * springForward);
+        m_balanceSpringR.connectedAnchor = transform.position + (m_balanceSpringR.anchor.z * springForward);
     }
 
     /// <summary>

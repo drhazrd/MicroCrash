@@ -758,6 +758,7 @@ MonoBehaviour:
   m_rigidBody: {fileID: 6459621205036875751}
   m_balanceSpringF: {fileID: 6459621205036875755}
   m_balanceSpringR: {fileID: 5455076792609135481}
+  m_test: {fileID: 0}
   maxMotorTorque: 250
   maxSteeringAngle: 10
   m_maxFuel: 100
@@ -776,9 +777,9 @@ SpringJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6459621205036875753}
   m_ConnectedBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0.6}
+  m_Anchor: {x: 0, y: 0, z: 2.11}
   m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0.6}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 2.11}
   serializedVersion: 2
   m_Spring: 10000
   m_Damper: 0.2
@@ -799,9 +800,9 @@ SpringJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6459621205036875753}
   m_ConnectedBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: -0.6}
+  m_Anchor: {x: 0, y: 0, z: -1.64}
   m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: -0.6}
+  m_ConnectedAnchor: {x: 0, y: 0, z: -1.64}
   serializedVersion: 2
   m_Spring: 10000
   m_Damper: 0.2
