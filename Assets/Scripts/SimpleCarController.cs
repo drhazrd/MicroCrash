@@ -8,7 +8,7 @@ public class AxleInfo
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
     public bool motor;
-    public bool steering;
+    public int steering; //0 = off, 1 = on, 2 = inverted
 }
 
 public class SimpleCarController : MonoBehaviour
@@ -16,8 +16,10 @@ public class SimpleCarController : MonoBehaviour
     public List<AxleInfo> axleInfos;
     public Rigidbody m_rigidBody;
     public Transform m_centerOfMass;
-    public SpringJoint m_balanceSpringF; //Forward balance spring
-    public SpringJoint m_balanceSpringR; //Rear balance spring
+    public SpringJoint m_balanceSpringFront; //Front balance spring
+    public SpringJoint m_balanceSpringRear; //Rear balance spring
+    public SpringJoint m_balanceSpringLeft; //Left balance spring
+    public SpringJoint m_balanceSpringRight; //Right balance spring
 
     public float maxMotorTorque;
     public float m_maxBrakeTorque;
@@ -104,12 +106,12 @@ public class SimpleCarController : MonoBehaviour
 
         //Determine motor power
         float motor = maxMotorTorque; // * Input.GetAxis("Vertical");
-        float breakForce = 0;
+        float brakeTorque = 0;
 
         if(Input.GetKey(KeyCode.S))
         {
-            motor = 0;
-            breakForce = m_maxBrakeTorque;
+            motor = maxMotorTorque * 0f;
+            //brakeTorque = m_maxBrakeTorque;
         }
 
         //Determine steering angle
@@ -118,19 +120,28 @@ public class SimpleCarController : MonoBehaviour
         //Loop through all the axles
         foreach (AxleInfo axleInfo in axleInfos)
         {
-            //If the current axles handles steering, apply the steering to it
-            //TO DO: Extend this functionality to have 3 modes: Off, Normal, Inverted (this allows rear wheels to steer in the opposite direction of the front wheels)
-            if (axleInfo.steering)
+            //If the current axle handles steering normally, apply it
+            if (axleInfo.steering == 1)
             {
                 axleInfo.leftWheel.steerAngle = steering;
                 axleInfo.rightWheel.steerAngle = steering;
             }
-            //If the current axles has power, apply the torque to it
+            //If the current axle uses inverted steering, apply the negative of the current steering angle
+            else if(axleInfo.steering == 2)
+            {
+                axleInfo.leftWheel.steerAngle = -steering;
+                axleInfo.rightWheel.steerAngle = -steering;
+            }
+            //If the current axle has power, apply the torque to it
             if (axleInfo.motor)
             {
                 axleInfo.leftWheel.motorTorque = motor;
                 axleInfo.rightWheel.motorTorque = motor;
             }
+
+            //Apply breaks
+            axleInfo.leftWheel.brakeTorque = brakeTorque;
+            axleInfo.rightWheel.brakeTorque = brakeTorque;
 
             //Apply the current position and rotation of the wheel collidier to the first child object under each wheel
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
@@ -150,9 +161,15 @@ public class SimpleCarController : MonoBehaviour
     /// </summary>
     public void UpdateBalanceSprings()
     {
+        //Front and back balance springs
         Vector3 springForward = Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
-        m_balanceSpringF.connectedAnchor = transform.position + (m_balanceSpringF.anchor.z * springForward);
-        m_balanceSpringR.connectedAnchor = transform.position + (m_balanceSpringR.anchor.z * springForward);
+        m_balanceSpringFront.connectedAnchor = transform.position + (m_balanceSpringFront.anchor.z * springForward);
+        m_balanceSpringRear.connectedAnchor = transform.position + (m_balanceSpringRear.anchor.z * springForward);
+
+        //Left and right balance springs
+        Vector3 springRight = Vector3.Normalize(new Vector3(transform.right.x, 0, transform.right.z));
+        m_balanceSpringLeft.connectedAnchor = transform.position + (m_balanceSpringLeft.anchor.z * springRight);
+        m_balanceSpringRight.connectedAnchor = transform.position + (m_balanceSpringRight.anchor.z * springRight);
     }
 
     /// <summary>
