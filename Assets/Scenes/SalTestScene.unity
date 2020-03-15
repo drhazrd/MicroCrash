@@ -211,7 +211,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77944346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f4189e52c47ef24a807457f83edf22c, type: 3}
   m_Name: 
@@ -563,6 +563,50 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201389855, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: cameras.Array.data[0]._camera
+      value: 
+      objectReference: {fileID: 77944348}
+    - target: {fileID: 1201389855, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: CameraSettings.followPlayer.displacementSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201389855, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: CameraSettings.camerasUpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201389855, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: CameraSettings.followPlayer.spinSpeedCustomLookAt
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.17685701
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 8.731151e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000000035258079
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9842366
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 607354200, guid: 5a755dca39db79a40800397c26c29152, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 20.373001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a755dca39db79a40800397c26c29152, type: 3}
