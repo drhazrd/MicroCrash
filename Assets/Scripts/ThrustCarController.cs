@@ -2,16 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class AxleInfo
-{
-    public WheelCollider leftWheel;
-    public WheelCollider rightWheel;
-    public bool motor;
-    public int steering; //0 = off, 1 = on, 2 = inverted
-}
-
-public class SimpleCarController : MonoBehaviour
+public class ThrustCarController : MonoBehaviour
 {
     public List<AxleInfo> axleInfos;
     public Rigidbody m_rigidBody;
@@ -38,7 +29,7 @@ public class SimpleCarController : MonoBehaviour
 
     public float m_maxStrafeBoostCooldown;
     public float m_strafeBoostCooldown;
-        
+
     public Vector3 m_jumpForce;
     public Vector3 m_boostForce;
     public float m_strafeForce;
@@ -103,7 +94,7 @@ public class SimpleCarController : MonoBehaviour
             m_rigidBody.AddForce(m_boostForce.z * transform.forward, ForceMode.Impulse);
             m_fuel -= m_boostFuelDrainRate;
         }
-        else if(m_boostCooldown > 0)
+        else if (m_boostCooldown > 0)
         {
             m_boostCooldown -= Time.deltaTime;
         }
@@ -143,7 +134,7 @@ public class SimpleCarController : MonoBehaviour
         float motor = maxMotorTorque; // * Input.GetAxis("Vertical");
         float brakeTorque = 0;
 
-        if(Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             motor = maxMotorTorque * 0f;
             //brakeTorque = m_maxBrakeTorque;
@@ -162,7 +153,7 @@ public class SimpleCarController : MonoBehaviour
                 axleInfo.rightWheel.steerAngle = steering;
             }
             //If the current axle uses inverted steering, apply the negative of the current steering angle
-            else if(axleInfo.steering == 2)
+            else if (axleInfo.steering == 2)
             {
                 axleInfo.leftWheel.steerAngle = -steering;
                 axleInfo.rightWheel.steerAngle = -steering;
