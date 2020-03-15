@@ -20,6 +20,7 @@ public class SimpleCarController : MonoBehaviour
     public SpringJoint m_balanceSpringR; //Rear balance spring
 
     public float maxMotorTorque;
+    public float m_maxBrakeTorque;
     public float maxSteeringAngle;
 
     public float m_maxFuel;
@@ -99,11 +100,17 @@ public class SimpleCarController : MonoBehaviour
     public void FixedUpdate()
     {
         //TO DO:
-        //Handle boost
         //Handle breaking
 
         //Determine motor power
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
+        float motor = maxMotorTorque; // * Input.GetAxis("Vertical");
+        float breakForce = 0;
+
+        if(Input.GetKey(KeyCode.S))
+        {
+            motor = 0;
+            breakForce = m_maxBrakeTorque;
+        }
 
         //Determine steering angle
         float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
