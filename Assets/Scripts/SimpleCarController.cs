@@ -18,6 +18,8 @@ public class SimpleCarController : MonoBehaviour
     public SpringJoint m_balanceSpringF; //Forward balance spring
     public SpringJoint m_balanceSpringR; //Rear balance spring
 
+    public Transform m_test;
+
     public float maxMotorTorque;
     public float maxSteeringAngle;
 
@@ -77,8 +79,9 @@ public class SimpleCarController : MonoBehaviour
         }
 
         //Update balance spring positions
-        m_balanceSpringF.connectedAnchor = transform.position + m_balanceSpringF.anchor;
-        m_balanceSpringR.connectedAnchor = transform.position + m_balanceSpringR.anchor;
+        Vector3 springForward = Vector3.Normalize(new Vector3(transform.forward.x, 0, transform.forward.z));
+        m_balanceSpringF.connectedAnchor = transform.position + (m_balanceSpringF.anchor.z * springForward);
+        m_balanceSpringR.connectedAnchor = transform.position + (m_balanceSpringR.anchor.z * springForward);
 
         //Handle reset
         if (Input.GetKeyDown(KeyCode.LeftControl))
