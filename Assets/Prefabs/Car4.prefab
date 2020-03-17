@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 2449612555058570057}
   - component: {fileID: 8672783760859340211}
   - component: {fileID: 2449612555058570059}
-  - component: {fileID: 2449612555058570054}
+  - component: {fileID: 1654219190111192451}
   - component: {fileID: 2449612555058570055}
   - component: {fileID: 3742413851105560533}
   - component: {fileID: 8672783760859340172}
@@ -379,7 +379,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2449612555058570054
+--- !u!114 &1654219190111192451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2449612555058570053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45447d5eb1ffd84baab1bca02b4f170, type: 3}
+  m_Script: {fileID: 11500000, guid: ba8465f2ae25285459ae8c76b13b2e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axleInfos:
@@ -415,8 +415,13 @@ MonoBehaviour:
   m_jumpFuelDrain: 25
   m_maxJumpCooldown: 1.5
   m_jumpCooldown: 0
+  m_maxBoostCooldown: 0
+  m_boostCooldown: 0
+  m_maxStrafeBoostCooldown: 0
+  m_strafeBoostCooldown: 0
   m_jumpForce: {x: 0, y: 15000, z: 0}
   m_boostForce: {x: 0, y: 0, z: 15000}
+  m_strafeForce: 0
 --- !u!145 &2449612555058570055
 SpringJoint:
   m_ObjectHideFlags: 0

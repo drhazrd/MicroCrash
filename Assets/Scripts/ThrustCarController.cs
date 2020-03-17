@@ -158,16 +158,6 @@ public class ThrustCarController : MonoBehaviour
                 axleInfo.leftWheel.steerAngle = -steering;
                 axleInfo.rightWheel.steerAngle = -steering;
             }
-            //If the current axle has power, apply the torque to it
-            if (axleInfo.motor)
-            {
-                axleInfo.leftWheel.motorTorque = motor;
-                axleInfo.rightWheel.motorTorque = motor;
-            }
-
-            //Apply breaks
-            axleInfo.leftWheel.brakeTorque = brakeTorque;
-            axleInfo.rightWheel.brakeTorque = brakeTorque;
 
             //Apply the current position and rotation of the wheel collidier to the first child object under each wheel
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
