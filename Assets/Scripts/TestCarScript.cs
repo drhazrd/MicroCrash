@@ -6,26 +6,46 @@ public class TestCarScript : MonoBehaviour
 {
     public Rigidbody sphere;
     public Transform kartModel;
+    public Transform kartNormal;
     float speed, currentSpeed;
     float rotate, currentRotate;
-    public float gravity = 10f;
+
+    [Header("Parameters")]
     public float steering = 80f;
     public float acceleration = 30f;
+    public float accelerationDampner = 0.1f;
+    public float gravity = 10f;
+    public LayerMask layerMask;
+    public Collider playerScoreTrigger;
+    public ScoreKeeper sKeeper;
 
-    // Start is called before the first frame update
+
+    [Header("Model Parts")]
+    public Transform frontRWheels;
+    public Transform frontLWheels;
+    public Transform backRWheels;
+    public Transform backLWheels;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position = sphere.transform.position - new Vector3(0, .2f, 0);
-        if (Input.GetButton("Fire1"))
+
+        if (Input.GetAxis("Vertical") != 0)
         {
             speed = acceleration;
         }
+        else if (Input.GetAxis("Vertical") <= 0)
+        {
+            Physics.sleepThreshold = accelerationDampner;
+            speed = 0;
+
+        }
+        
         if (Input.GetAxis("Horizontal") != 0)
         {
             int dir = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
@@ -34,15 +54,39 @@ public class TestCarScript : MonoBehaviour
         }
         currentSpeed = Mathf.SmoothStep(currentSpeed, speed, Time.deltaTime * 12f); speed = 0f;
         currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f); rotate = 0f;
+
+        frontRWheels.localEulerAngles = new Vector3(0, (Input.GetAxis("Horizontal") * steering), frontRWheels.localEulerAngles.z);
+        frontLWheels.localEulerAngles = new Vector3(0, (Input.GetAxis("Horizontal") * steering), frontLWheels.localEulerAngles.z);
+        frontRWheels.localEulerAngles += new Vector3(sphere.velocity.magnitude / 4, 0, 0);
+        frontLWheels.localEulerAngles += new Vector3(sphere.velocity.magnitude / 4, 0, 0);
+        backRWheels.localEulerAngles += new Vector3(sphere.velocity.magnitude / 4, 0, 0);
+        backLWheels.localEulerAngles += new Vector3(sphere.velocity.magnitude / 4, 0, 0);
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
         sphere.AddForce(kartModel.transform.forward * currentSpeed, ForceMode.Acceleration);
         sphere.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
+
+        RaycastHit hitOn;
+        RaycastHit hitNear;
+
+        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitOn, 1.1f, layerMask);
+        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitNear, 2.0f, layerMask);
+
+        //Normal Rotation
+        kartNormal.up = Vector3.Lerp(kartNormal.up, hitNear.normal, Time.deltaTime * 8.0f);
+        kartNormal.Rotate(0, transform.eulerAngles.y, 0);
     }
     public void Steer(int direction, float amount)
     {
         rotate = (steering * direction) * amount;
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "ScoreTarget")
+        {
+            sKeeper.score += 10;
+        }
     }
 }
