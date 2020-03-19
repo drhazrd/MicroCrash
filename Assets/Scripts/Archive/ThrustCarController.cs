@@ -132,7 +132,6 @@ public class ThrustCarController : MonoBehaviour
 
         //Determine motor power
         float motor = maxMotorTorque; // * Input.GetAxis("Vertical");
-        float brakeTorque = 0;
 
         if (Input.GetKey(KeyCode.S))
         {
