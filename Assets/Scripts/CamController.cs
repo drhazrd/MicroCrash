@@ -7,7 +7,6 @@ public class CamController : MonoBehaviour
     public Transform target;
 
     public Vector3 cameraOffset;
-    public Transform camPiviot;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +16,7 @@ public class CamController : MonoBehaviour
     void LateUpdate()
     {
         transform.position = target.position - cameraOffset;
+        transform.rotation = target.rotation;
         transform.LookAt(target);
-        camPiviot.transform.position = target.transform.position;
     }
 }
