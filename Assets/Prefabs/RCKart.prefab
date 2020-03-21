@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1929040645458999141}
   - component: {fileID: 7596619049935314280}
   m_Layer: 0
-  m_Name: Stunt04.lwo.003
+  m_Name: br
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4690265062035811653}
   - component: {fileID: 1312629072780956295}
   m_Layer: 0
-  m_Name: Stunt04.lwo
+  m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,19 +233,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3137694945165400222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e30d1927e559d488a38b0c998af175, type: 3}
+  m_Script: {fileID: 11500000, guid: 646dc01de27f7f940880ed9b1d861dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 3137694945966386135}
-  kartModel: {fileID: 3137694945165400223}
+  kartModel: {fileID: 2273966620623281619}
   kartNormal: {fileID: 2273966620623281619}
-  steering: 30
-  acceleration: 50
+  steering: 80
+  acceleration: 30
   accelerationDampner: 0.1
   gravity: 10
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   playerScoreTrigger: {fileID: 8380914337628060880}
   sKeeper: {fileID: 0}
   frontRWheels: {fileID: 7191612709625382409}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 7848930588801392408}
   - component: {fileID: 1454204291868866349}
   m_Layer: 0
-  m_Name: Stunt04.lwo.002
+  m_Name: bl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 6546336051369466706}
   - component: {fileID: 3208506514187025682}
   m_Layer: 0
-  m_Name: Stunt04.lwo.004
+  m_Name: fr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 1857555771230427199}
   - component: {fileID: 5298602671111283067}
   m_Layer: 0
-  m_Name: Stunt04.lwo.001
+  m_Name: fl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

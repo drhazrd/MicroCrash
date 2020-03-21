@@ -39,6 +39,10 @@ public class TestCarScript : MonoBehaviour
         {
             speed = acceleration;
         }
+        if (Input.GetAxis("Vertical") != 0)
+        {
+            speed = acceleration;
+        }
         else if (Input.GetAxis("Vertical") <= 0)
         {
             Physics.sleepThreshold = accelerationDampner;
