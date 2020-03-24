@@ -14,6 +14,7 @@ public class ArcadeCarController : MonoBehaviour
     #region Declarations
     public Rigidbody m_rigidBody;
     public Transform m_centerOfMass;
+    public Transform m_model; //Pointer to the transform of the car model
 
     public float m_maxFuel;
     public float m_fuel;
@@ -97,6 +98,8 @@ public class ArcadeCarController : MonoBehaviour
         {
             TESTRESET();
         }
+
+        UpdateCarVisuals();
     }
 
     /// <summary>
@@ -122,6 +125,14 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles updating the car's visual details based on the current state of the car
+    /// </summary>
+    private void UpdateCarVisuals()
+    {
+        m_model.forward = -m_rigidBody.velocity;
+        m_model.up = Vector3.up;
+    }
 
     /// <summary>
     /// Simple test function that resets the object
