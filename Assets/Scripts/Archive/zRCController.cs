@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RCController : MonoBehaviour
+public class zRCController : MonoBehaviour
 {
     public Rigidbody sphere;
     public Transform kartModel;
