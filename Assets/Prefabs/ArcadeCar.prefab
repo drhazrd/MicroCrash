@@ -565,6 +565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1169098936021060951}
+  - component: {fileID: 5866720439413316584}
   - component: {fileID: 1169098936021060936}
   m_Layer: 0
   m_Name: RollingCollider
@@ -587,6 +588,22 @@ Transform:
   m_Father: {fileID: 1169098936456330905}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &5866720439413316584
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169098936021060950}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!135 &1169098936021060936
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -609,7 +626,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1169098936456330905}
-  - component: {fileID: 1169098936456330906}
   - component: {fileID: 1169098936456330904}
   m_Layer: 0
   m_Name: ArcadeCar
@@ -636,22 +652,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1169098936456330906
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1169098936456330983}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1169098936456330904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,9 +664,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3f57db2fff5af448b726867f64d7aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rigidBody: {fileID: 1169098936456330906}
+  m_rigidBody: {fileID: 5866720439413316584}
   m_centerOfMass: {fileID: 0}
-  m_model: {fileID: 0}
+  m_model: {fileID: 1057127524}
   m_maxFuel: 100000
   m_fuel: 100000
   m_boostFuelDrainRate: 0

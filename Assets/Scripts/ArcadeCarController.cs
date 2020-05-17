@@ -130,8 +130,29 @@ public class ArcadeCarController : MonoBehaviour
     /// </summary>
     private void UpdateCarVisuals()
     {
-        m_model.forward = -m_rigidBody.velocity;
-        m_model.up = Vector3.up;
+        /*
+         * Used this to help me think this through:
+         * https://answers.unity.com/questions/264824/combine-transformforward-and-transformup.html
+         * 
+         * Next objective: 
+         * Get this working AT ALL using lookat or lookrotation
+         * 
+         * Next objective++:
+         * Get it working by using the normal with the ground
+         * 
+         * Next objective++++:
+         * Get it working using more advanced normals.. multiple pointing at the ground and picking a best choice based on it to get the vehicle looking nice on more complex terrain
+         * 
+         * Next objective++++++:
+         * Get teh wheels working with this system and creating a nice looking artificial suspension system
+         * 
+        */
+
+        m_model.position = m_rigidBody.position;
+        Debug.Log("before: " + m_model.forward + ":::" + -m_rigidBody.velocity);
+        m_model.forward = -m_rigidBody.velocity.normalized;
+        Debug.Log("after: " + m_model.forward + ":::" + -m_rigidBody.velocity);
+        //m_model.up = Vector3.up;
     }
 
     /// <summary>
@@ -149,6 +170,7 @@ public class ArcadeCarController : MonoBehaviour
         m_rigidBody.angularVelocity = Vector3.zero;
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        m_rigidBody.position = Vector3.zero;
     }
 
     #region Properties
