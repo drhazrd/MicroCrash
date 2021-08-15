@@ -4,57 +4,85 @@ using UnityEngine;
 
 public class RCController : MonoBehaviour
 {
-    public Rigidbody sphere;
-    public Transform kartModel;
-    float speed, currentSpeed;
-    float rotate, currentRotate;
-    public float gravity = 10f;
+    public Rigidbody theRB;
+    float speedInput, turnInput;
+    bool grounded;
+    public LayerMask whatIsGround;
+    float groundRayLength = .5f;
+    public Transform groundRayPoint;
+
+    [Header("Parameters")]
+    public float forwardAccel = 8f;
+    float reverseAccel = 4f;
+    float maxSpeed = 50f;
+    float turnStrength = 180;
+    float gravityForce = 10f;
     public float steering = 80f;
     public float acceleration = 30f;
-    public LayerMask layerMask;
+    public float accelerationDampner = 0.1f;
+    public float gravity = 10f;
+    //public Collider playerScoreTrigger;
+    //public ScoreKeeper sKeeper;
+
+    [Header("Model Parts")]
+    public Transform kartBody;
+    public Transform frontRWheels, frontLWheels, backRWheels, backLWheels;
+    private float dragOnGround = 3f;
+    private float maxWheelTurn = 35f;
 
     void Start()
     {
-
+        theRB.transform.parent = null;
     }
 
     void Update()
     {
-        transform.position = sphere.transform.position - new Vector3(0, .2f, 0);
+        speedInput = 0f;
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            speedInput = Input.GetAxis("Vertical") * forwardAccel * 1000f;
+        } else if (Input.GetAxis("Vertical") < 0)
+        {
+            speedInput = Input.GetAxis("Vertical") * reverseAccel * 1000f;
+        }
+        turnInput = Input.GetAxis("Horizontal");
+        if (grounded) { 
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, turnInput * turnStrength * Time.deltaTime * Input.GetAxis("Vertical"), 0f));
+        }
 
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            speed = acceleration;
-        }
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            int dir = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
-            float amount = Mathf.Abs((Input.GetAxis("Horizontal")));
-            Steer(dir, amount);
-        }
-        currentSpeed = Mathf.SmoothStep(currentSpeed, speed, Time.deltaTime * 12f); speed = 0f;
-        currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime * 4f); rotate = 0f;
+        frontLWheels.localRotation = Quaternion.Euler(frontLWheels.localRotation.eulerAngles.x, (turnInput * maxWheelTurn) - 180, frontLWheels.localRotation.eulerAngles.z);
+        frontRWheels.localRotation = Quaternion.Euler(frontRWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontRWheels.localRotation.eulerAngles.z);
+        transform.position = theRB.transform.position;
     }
     private void FixedUpdate()
     {
-        sphere.AddForce(kartModel.transform.forward * currentSpeed, ForceMode.Acceleration);
-        sphere.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
-        RaycastHit hitOn;
-        RaycastHit hitNear;
+        grounded = false;
+        RaycastHit hit;
 
-        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitOn, 1.1f, layerMask);
-        Physics.Raycast(transform.position + (transform.up * .1f), Vector3.down, out hitNear, 2.0f, layerMask);
-
-        kartModel.up = Vector3.Lerp(kartModel.up, hitNear.normal, Time.deltaTime * 8.0f);
-        kartModel.Rotate(0, transform.eulerAngles.y, 0);
+        if(Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround))
+        {
+            grounded = true;
+            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        }
+        if (grounded)
+        {
+            theRB.drag = dragOnGround;
+            if (Mathf.Abs(speedInput) > 0)
+            {
+                theRB.AddForce(transform.forward * speedInput);
+            }
+        }else
+        {
+            theRB.drag = 0.1f;
+            theRB.AddForce(Vector3.up * -gravityForce * 100f);
+        }
     }
 
-
-
     public void Steer(int direction, float amount)
+    { }
+    public void Steer(int direction, float amount, int number)
     {
-        rotate = (steering * direction) * amount;
+        
     }
     private void OnDrawGizmos()
     {

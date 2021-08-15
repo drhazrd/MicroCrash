@@ -5,41 +5,40 @@ using UnityEngine;
 public class TestCarScript : MonoBehaviour
 {
     public Rigidbody sphere;
-    public Transform kartModel;
     public Transform kartNormal;
+    float speedInput, turnInput;
     float speed, currentSpeed;
     float rotate, currentRotate;
-
+    bool grounded;
+    Transform scoreBumper;
     [Header("Parameters")]
     public float steering = 80f;
     public float acceleration = 30f;
     public float accelerationDampner = 0.1f;
     public float gravity = 10f;
     public LayerMask layerMask;
-    public Collider playerScoreTrigger;
-    public ScoreKeeper sKeeper;
+    //public Collider playerScoreTrigger;
+    //public ScoreKeeper sKeeper;
 
 
     [Header("Model Parts")]
-    public Transform frontRWheels;
-    public Transform frontLWheels;
-    public Transform backRWheels;
-    public Transform backLWheels;
+    public Transform kartBody;
+    public Transform frontRWheels, frontLWheels, backRWheels, backLWheels;
 
     void Start()
     {
-        
+        //sphere.transform.parent = null;
     }
 
     void Update()
-    {
+    { 
         transform.position = sphere.transform.position - new Vector3(0, .2f, 0);
 
-        if (Input.GetAxis("Vertical") != 0)
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetAxis("JoyTriggers") <= .5f)
         {
-            speed = acceleration;
+            speed = -acceleration;
         }
-        if (Input.GetAxis("Vertical") != 0)
+        if (Input.GetKeyDown(KeyCode.UpArrow) )//||Input.GetAxis("JoyTriggers") <= .1f)
         {
             speed = acceleration;
         }
@@ -68,7 +67,7 @@ public class TestCarScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        sphere.AddForce(kartModel.transform.forward * currentSpeed, ForceMode.Acceleration);
+        sphere.AddForce(kartBody.transform.forward * currentSpeed, ForceMode.Acceleration);
         sphere.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y + currentRotate, 0), Time.deltaTime * 5f);
 
@@ -90,7 +89,7 @@ public class TestCarScript : MonoBehaviour
     {
         if(other.tag == "ScoreTarget")
         {
-            sKeeper.score += 10;
+            ScoreKeeper.instance_score.score += 10;
         }
     }
 }

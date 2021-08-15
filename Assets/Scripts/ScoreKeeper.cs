@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour
 {
+    public static ScoreKeeper instance_score;
+
     public int score;
     public Text scoreText;
     TestCarScript playerCar;
