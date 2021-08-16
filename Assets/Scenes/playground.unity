@@ -1135,7 +1135,7 @@ PrefabInstance:
     - target: {fileID: 3137694946208935797, guid: 6cf5dd271e7d6ea4fb2f651cb6bca8bc,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3137694946208935798, guid: 6cf5dd271e7d6ea4fb2f651cb6bca8bc,
         type: 3}
@@ -6935,6 +6935,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617287308}
   m_CullTransparentMesh: 0
+--- !u!4 &632445567 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3263300992316035214, guid: cc1d743691c0c07449b6f6072b44da7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3263300990327566681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -9059,7 +9065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ce899be8029dd43a8ad3516a60bb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1061988306}
+  target: {fileID: 632445567}
   cameraOffset: {x: 10, y: -10, z: 10}
 --- !u!1001 &968495835
 PrefabInstance:
@@ -9456,12 +9462,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &1061988306 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3137694945966386133, guid: 6cf5dd271e7d6ea4fb2f651cb6bca8bc,
-    type: 3}
-  m_PrefabInstance: {fileID: 458449935}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1072734541
 Mesh:
   m_ObjectHideFlags: 0
@@ -9707,7 +9707,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-323496
+  m_Name: pb_Mesh-25332
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15963,7 +15963,7 @@ PrefabInstance:
     - target: {fileID: 3263300992316035208, guid: cc1d743691c0c07449b6f6072b44da7c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3263300992316035214, guid: cc1d743691c0c07449b6f6072b44da7c,
         type: 3}
@@ -16023,7 +16023,7 @@ PrefabInstance:
     - target: {fileID: 3263300992316035215, guid: cc1d743691c0c07449b6f6072b44da7c,
         type: 3}
       propertyPath: useController
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3263300992316035215, guid: cc1d743691c0c07449b6f6072b44da7c,
         type: 3}
@@ -16035,6 +16035,11 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3263300992316035210, guid: cc1d743691c0c07449b6f6072b44da7c,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 4072870220056188626, guid: cc1d743691c0c07449b6f6072b44da7c,
         type: 3}
       propertyPath: m_Mesh
@@ -16045,5 +16050,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1142534526}
+    - target: {fileID: 3263300992316035212, guid: cc1d743691c0c07449b6f6072b44da7c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc1d743691c0c07449b6f6072b44da7c, type: 3}
