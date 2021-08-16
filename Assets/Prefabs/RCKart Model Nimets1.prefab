@@ -245,20 +245,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3137694945165400222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32fca24beea4ec34e90b1047e3638136, type: 3}
+  m_Script: {fileID: 11500000, guid: 03566fbf80924c64798c1647723915f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theRB: {fileID: 3137694945966386135}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  groundRayPoint: {fileID: 2623709871307595481}
-  forwardAccel: 62.6
+  sphere: {fileID: 3137694945966386135}
+  kartNormal: {fileID: 2273966620623281619}
   steering: 80
-  acceleration: 50
+  acceleration: 30
   accelerationDampner: 0.1
   gravity: 10
-  kartBody: {fileID: 3566239057776519}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  kartBody: {fileID: 2273966620623281619}
   frontRWheels: {fileID: 7191612709625382409}
   frontLWheels: {fileID: 2867640333772545774}
   backRWheels: {fileID: 130009184578430066}
