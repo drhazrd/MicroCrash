@@ -1,73 +1,129 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-    
-	public float moveSpeed, sprintSpeed;
-	private Rigidbody myRigidbody;
+public class PlayerController : MonoBehaviour
+{
+    float moveSpeed;
+    float walkSpeed = 1.2f;
+    float runSpeed = 4f;
+    float distFromGround;
+    float jumpForce = 4f;
+    CharacterController controller;
+    private Vector3 moveDirection;
+    public float gravityScale;
+    Animator anim;
+    Transform playerPivotPoint;
+    public float rotateSpeed;
+    GameObject characterGraphics;
+    bool player1, player2, player3, player4;
+    public float knockBackForce;
+    public float knockBackTime;
+    private float knockBackCounter;
+    [SerializeField]
+    bool canMove;
+    private bool isMoving = false;
+    private bool isRunning = false;
+    private bool canInteract = true;
 
-	private Vector3 moveInput;
-	private Vector3 moveVelocity;
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+        moveSpeed = walkSpeed;
+        characterGraphics = this.transform.GetChild(0).gameObject;
+        playerPivotPoint = this.transform.GetChild(1);
+        anim = characterGraphics.GetComponent<Animator>();
+    }
+    void Update()
+    {
+        anim.SetBool("canMove", canMove);
+        canMove = LevelManager.lv_instance.movementFreeze;
 
-	private Camera mainCamera;
+        if (knockBackCounter <= 0)
+        {
+            float yStore = moveDirection.y;
+            if (canMove == true)
+            {
+                moveDirection = (transform.forward * Input.GetAxis("Vertical")) + (transform.right * Input.GetAxis("Horizontal"));
+                moveDirection = moveDirection.normalized * moveSpeed;
+            }
+            else
+            {
+                return;
+            }
+            moveDirection.y = yStore;
+            if (controller.isGrounded)
+            {
+                moveDirection.y = 0f;
+                //Improved jump script.
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Jump();
+                }
+            }
+        }
+        else
+        {
+            knockBackCounter -= Time.deltaTime;
+        }
 
-	GunController theGun;
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        controller.Move(moveDirection * Time.deltaTime);
+        distFromGround = moveDirection.y;
+        anim.SetFloat("distanceFromGround", distFromGround);
+        anim.SetBool("isMoving", isMoving);
+        anim.SetBool("isRunning", isRunning);
 
-	public bool useController;
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            transform.rotation = Quaternion.Euler(0f, playerPivotPoint.rotation.eulerAngles.y, 0);
+            Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+            characterGraphics.transform.rotation = Quaternion.Slerp(characterGraphics.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
+            isMoving = true;
+        }
+        else if (Input.GetAxis("Horizontal") == 0f || Input.GetAxis("Vertical") == 0f)
+        {
+            isMoving = false;
+            isRunning = false;
+            moveSpeed = walkSpeed;
+        }
 
-	// Use this for initialization
-	void Start () {
-		myRigidbody = GetComponent<Rigidbody>();
-		mainCamera = FindObjectOfType<Camera>();
-		theGun = GetComponentInChildren<GunController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-		moveVelocity = moveInput * moveSpeed;
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (isMoving)
+            {
+                isRunning = true;
+                moveSpeed = runSpeed;
+            }
+            else if (!isMoving)
+            {
+                moveSpeed = walkSpeed;
+                isRunning = false;
+            }
+        }
 
-		//Rotate with Mouse
-		if(!useController)
-		{
-			Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-			Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-			float rayLength;
+        canInteract = false;
+        anim.SetBool("isGrounded", controller.isGrounded);
+        anim.SetFloat("runSpeed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
+    }
 
-			if(groundPlane.Raycast(cameraRay, out rayLength))
-			{
-				Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-				Debug.DrawLine(cameraRay.origin, pointToLook, Color.blue);
-
-				transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-			}
-
-			if(Input.GetMouseButtonDown(0))
-				theGun.isFiring = true;
-
-			if(Input.GetMouseButtonUp(0))
-				theGun.isFiring = false;
-
-		}
-
-		//Rotate with Controller
-		if(useController)
-		{
-			Vector3 playerDirection = Vector3.right * Input.GetAxisRaw("JoyRightHoz") + Vector3.forward * -Input.GetAxisRaw("JoyRightVert");
-			if(playerDirection.sqrMagnitude > 0.0f)
-			{
-				transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
-			}
-
-			if(Input.GetKeyDown(KeyCode.Joystick1Button5))
-				theGun.isFiring = true;
-
-			if(Input.GetKeyUp(KeyCode.Joystick1Button5))
-				theGun.isFiring = false;
-		}
-	}
-
-	void FixedUpdate () {
-		myRigidbody.velocity = moveVelocity;
-	}
+    public void Jump()
+    {
+        moveDirection.y = jumpForce;
+        anim.SetTrigger("Jump");
+    }
+    public void Knockback(Vector3 direction)
+    {
+        knockBackCounter = knockBackTime;
+        moveDirection = direction * knockBackForce;
+        moveDirection.y = knockBackForce;
+    }
+    public void Warp(Vector3 position, Vector3 rotation)
+    {
+        controller.enabled = false;
+        transform.position = position;
+        transform.eulerAngles = rotation;
+        controller.enabled = true;
+    }
 }
