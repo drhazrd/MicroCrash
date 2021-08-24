@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RCController : MonoBehaviour
 {
-    public Rigidbody theRB;
+    public Rigidbody driveCollider;
     float speedInput, turnInput;
     bool grounded;
     public LayerMask whatIsGround;
@@ -35,7 +35,7 @@ public class RCController : MonoBehaviour
 
     void Start()
     {
-        theRB.transform.parent = null;
+        driveCollider.transform.parent = null;
         UIKeeper = UIManager.instance_UI;
         thrusterFX.SetActive(false);
     }
@@ -62,7 +62,7 @@ public class RCController : MonoBehaviour
 
         frontLWheels.localRotation = Quaternion.Euler(frontLWheels.localRotation.eulerAngles.x, (turnInput * maxWheelTurn) - 180, frontLWheels.localRotation.eulerAngles.z);
         frontRWheels.localRotation = Quaternion.Euler(frontRWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontRWheels.localRotation.eulerAngles.z);
-        transform.position = theRB.transform.position;
+        transform.position = driveCollider.transform.position;
     }
     private void FixedUpdate()
     {
@@ -79,17 +79,17 @@ public class RCController : MonoBehaviour
 
         if (grounded)
         {
-            theRB.drag = dragOnGround;
+            driveCollider.drag = dragOnGround;
             if (Mathf.Abs(speedInput) > 0)
             {
-                theRB.AddForce(transform.forward * speedInput * boostMultiplier);
+                driveCollider.AddForce(transform.forward * speedInput * boostMultiplier);
 
                 emissionRate = maxEmission;
             }
         }else
         {
-            theRB.drag = 0.1f;
-            theRB.AddForce(Vector3.up * -gravityForce * 100f);
+            driveCollider.drag = 0.1f;
+            driveCollider.AddForce(Vector3.up * -gravityForce * 100f);
                 emissionRate = 0f;
         }
         foreach(ParticleSystem part in dustTrails)
@@ -110,7 +110,10 @@ public class RCController : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        UIKeeper.AddScore(boostMultiplier);
+        if (other.name == "ScoreTarget") 
+        { 
+            UIKeeper.AddScore(boostMultiplier); 
+        }
     }
     
     private void OnDrawGizmos()

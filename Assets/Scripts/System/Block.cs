@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Assets.Scripts
-{
-    public class Block : MonoBehaviour
-    {
 
-        
-    }
+public class Block : MonoBehaviour
+{
+
 }
