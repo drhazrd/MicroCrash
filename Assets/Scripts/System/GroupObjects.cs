@@ -1,9 +1,9 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿//using UnityEditor;
+/*using UnityEngine;
 
 public static class GroupObjects
 {
-    [MenuItem("GameObject/Group Selected %g")]
+
     private static void GroupSelected()
     {
         if (!Selection.activeTransform) return;
@@ -13,4 +13,4 @@ public static class GroupObjects
         foreach (var transform in Selection.transforms) Undo.SetTransformParent(transform, go.transform, "Group Selected");
         Selection.activeGameObject = go;
     }
-}
+}*/
