@@ -8,7 +8,6 @@ public class CamController : MonoBehaviour
     float fovCar = 45f, fovFoot = 15f;
     Camera cam;
     public Vector3 cameraOffset;
-    // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();

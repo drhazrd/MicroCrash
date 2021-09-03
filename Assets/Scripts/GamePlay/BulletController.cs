@@ -35,7 +35,7 @@ public class BulletController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision other)
+	void OnCollisionEnter(UnityEngine.Collision other)
 	{
 		if(other.gameObject.tag == "Enemy")
 		{
