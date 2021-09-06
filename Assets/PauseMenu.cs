@@ -14,27 +14,15 @@ public class PauseMenu : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			if (GameIsPaused)
-			{
-				Resume();
-			}
-			else
-			{
-				Pause();
-			}
+			GameIsPaused = !GameIsPaused;
+			Pause();
 		}
-	}
-	public void Resume()
-	{
-		pausedUI.SetActive(false);
-		Time.timeScale = 1f;
-		GameIsPaused = false;
 	}
 	public void Pause()
 	{
-		pausedUI.SetActive(true);
-		Time.timeScale = 0f;
-		GameIsPaused = true;
+		pausedUI.SetActive(GameIsPaused);
+		Time.timeScale = Time.deltaTime == 0 ? 1 : 0;
+		AudioManager.audio_instance.Lowpass();
 	}
 	public void MenuExit()
 	{
@@ -44,5 +32,8 @@ public class PauseMenu : MonoBehaviour
 	{
 		Application.Quit();
 	}
-
+	public void LevelReset()
+    {
+		LevelManager.lv_instance.LevelReset();
+    }
 }

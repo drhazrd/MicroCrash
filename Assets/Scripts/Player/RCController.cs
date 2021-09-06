@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 using UnityEngine;
 
 public class RCController : MonoBehaviour
@@ -16,7 +17,8 @@ public class RCController : MonoBehaviour
     float reverseAccel = 35f;
     float turnStrength = 180;
     float gravityForce = 10f;
-    UIManager UIKeeper;
+    private float boostMultiplier = 1;
+    private float boostlength = 1;
 
     [Header("Model Parts")]
     public Transform kartBody;
@@ -24,43 +26,58 @@ public class RCController : MonoBehaviour
     private float dragOnGround = 3f;
     private float maxWheelTurn = 35f;
 
+    [Header("Battery Data")]
+    BatteryManager battery;
+    public bool batteryLife;
+    float batteryDecayrate;
+    public float decayMultiplier;
+    bool batteryActive;
+
+
     [Header("Vehicle FX")]
+    public GameObject sFX;
     public ParticleSystem[] dustTrails;
     public GameObject thrusterFX;
     public float maxEmission = 25f;
     private float emissionRate;
-    private int boostMultiplier = 1;
-    private float boostlength = 1;
 
 
     void Start()
     {
         driveCollider.transform.parent = null;
-        UIKeeper = UIManager.instance_UI;
         thrusterFX.SetActive(false);
+        battery = GetComponent<BatteryManager>();
     }
 
     void Update()
     {
+        decayMultiplier = boostMultiplier;
         speedInput = 0f;
-        if (Input.GetKeyDown(KeyCode.Space))
+        batteryActive = Input.GetAxis("Vertical") != 0;
+        battery.batterDecayActive = batteryActive;
+        if (GameManager.gm_instance.movementAllowed)
         {
-            StartCoroutine("Boost");
-            Debug.Log("Boost Triggered");
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine("Boost");
+                Debug.Log("Boost Triggered");
+            }
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                speedInput = Input.GetAxis("Vertical") * forwardAccel * 1000f;
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                speedInput = Input.GetAxis("Vertical") * reverseAccel * 1000f;
+            }
+            turnInput = Input.GetAxis("Horizontal");
         }
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            speedInput = Input.GetAxis("Vertical") * forwardAccel * 1000f;
-        } else if (Input.GetAxis("Vertical") < 0)
-        {
-            speedInput = Input.GetAxis("Vertical") * reverseAccel * 1000f;
-        }
-        turnInput = Input.GetAxis("Horizontal");
         if (grounded) { 
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, turnInput * turnStrength * Time.deltaTime * Input.GetAxis("Vertical"), 0f));
         }
 
-        frontLWheels.localRotation = Quaternion.Euler(frontLWheels.localRotation.eulerAngles.x, (turnInput * maxWheelTurn) - 180, frontLWheels.localRotation.eulerAngles.z);
+        frontLWheels.localRotation = Quaternion.Euler(frontLWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontLWheels.localRotation.eulerAngles.z);
         frontRWheels.localRotation = Quaternion.Euler(frontRWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontRWheels.localRotation.eulerAngles.z);
         transform.position = driveCollider.transform.position;
     }
@@ -102,7 +119,7 @@ public class RCController : MonoBehaviour
     public IEnumerator Boost()
     {
         Debug.Log("Boost Activated");
-        boostMultiplier = 5;
+        boostMultiplier = 2.5f;
         thrusterFX.SetActive(true);
         yield return new WaitForSeconds(boostlength);
         thrusterFX.SetActive(false);
@@ -110,9 +127,14 @@ public class RCController : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (other.name == "ScoreTarget") 
+        if (other.tag == "Pickup")
+        {
+            other.gameObject.GetComponent<ChargePickup>().Collected();
+            //GetComponent<BatteryManager>().currbatteryLife += GetComponent<BatteryManager>().currbatteryLife + 1000f;
+        } 
+        if (other.tag == "ScoreTarget") 
         { 
-            UIKeeper.AddScore(boostMultiplier); 
+            LevelManager.lv_instance.AddScore(boostMultiplier); 
         }
     }
     

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 
 [System.Serializable]
@@ -30,20 +31,33 @@ public class Tracks
 }
 public class AudioManager : MonoBehaviour
 {
-    public Tracks[] tracks;
+    public AudioMixerSnapshot paused;
+    public AudioMixerSnapshot unpaused;
+    public AudioMixerSnapshot[] audioStates;
 
+    public static AudioManager audio_instance;
+    //public Tracks[] tracks;
+    public AudioSource bgm, victory, defeat;
+    public AudioMixer aMixer;
+
+    public AudioSource[] soundEffect;
+
+    void Awake()
+    {
+        audio_instance = this;
+    }
     void Start()
     {
-        for(int i = 0; i < tracks.Length; i++)
+     /*   for(int i = 0; i < tracks.Length; i++)
         {
             GameObject _go = new GameObject("Sound_" + i + "_" + tracks[i].trackName);
             _go.transform.SetParent(this.transform);
             tracks[i].SetSource(_go.AddComponent<AudioSource>());
-        }
+        }*/
     }
     public void PlayTrack(string _name)
     {
-        for(int i = 0; i < tracks.Length; i++)
+       /* for(int i = 0; i < tracks.Length; i++)
         {
             if (tracks[i].trackName == _name)
             {
@@ -51,6 +65,55 @@ public class AudioManager : MonoBehaviour
                 return;
             }
         }
-        Debug.LogWarning("AudioManager: Sound not found in list "+_name+".");
+        Debug.LogWarning("AudioManager: Sound not found in list "+_name+".");*/
+    }
+    public void StopBGM()
+    {
+        bgm.Stop();
+    }
+    public void PlayBGM()
+    {
+        bgm.Play();
+    }
+    public void PlayVictory()
+    {
+        StopBGM();
+        victory.Play();
+    }
+    public void StopVictory()
+    {
+        victory.Stop();
+    }
+    public void PlayDefeat()
+    {
+        StopBGM();
+        defeat.Play();
+    }
+    public void StopDefeat()
+    {
+        defeat.Stop();
+    }
+    public void PlaySFX(int sfxNum)
+    {
+        soundEffect[sfxNum].Stop();
+        soundEffect[sfxNum].Play();
+    }
+    public void StopSFX(int sfxNum)
+    {
+    }
+    public void SetMasterVolume(float volumeLevel)
+    {
+        aMixer.SetFloat("MasterVol", volumeLevel);
+    }
+    public void Lowpass()
+    {
+        if(Time.timeScale == 0)
+        {
+            paused.TransitionTo(.01f);
+        }
+        else
+        {
+            unpaused.TransitionTo(.01f);
+        }
     }
 }

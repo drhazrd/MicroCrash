@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
 
 using System.Collections;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm_instance;
 
-    [SerializeField]
-    private UIManager UIManager;
+    
+    private UIManager uiManager;
     private AudioManager audioManager;
     private MenuManager menuManager;
-    // Use this for initialization
+    private CamController camManager;
+    private LevelManager levelManager;
+    private PlayerController userPlayer;
+    public bool gameStarted;
+    public bool movementAllowed;
+    public bool batteryDead, playerDead, levelActive, gameTypeWon, gameTypeLost, playerOnFoot, playerInCar;
+    public PlayerController thePlayer;
     void Awake()
     {
         gm_instance = this;
@@ -18,16 +25,32 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        audioManager = GetComponent<AudioManager>();
+        uiManager = UIManager.instance_UI;
+        if (uiManager == null)
+        {
+            Debug.Log("GameManager: No AudioManager");
+        }
+        audioManager = AudioManager.audio_instance;
         if (audioManager == null)
         {
             Debug.Log("GameManager: No AudioManager");
         }
-        menuManager = GetComponent<MenuManager>();
+        camManager = CamController.cam_instance;
         if (menuManager == null)
         {
-            Debug.Log("GameManager: No MenuManager");
+            Debug.Log("GameManager: No CamController");
         }
+        levelManager = LevelManager.lv_instance;
+        if (levelManager == null)
+        {
+            Debug.Log("GameManager: No LevelController");
+        }
+        userPlayer = PlayerController.player_instance;
+        if (levelManager == null)
+        {
+            Debug.Log("GameManager: No PlayerController");
+        }
+        thePlayer = userPlayer;
     }
 
     // Update is called once per frame
@@ -35,4 +58,11 @@ public class GameManager : MonoBehaviour
     {
 
     }
+    public IEnumerator GameStart()
+    {
+        yield return new WaitForSeconds(4f);
+        AudioManager.audio_instance.PlayBGM();
+    }
+
+    
 }

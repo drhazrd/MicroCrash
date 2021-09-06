@@ -23,23 +23,24 @@ public class PlayerHealthManager : MonoBehaviour {
 	void Update () {
 		if(currentHealth <=0)
 		{
+			LevelManager.lv_instance.MovementFreeze();
 			gameObject.SetActive(false);
 		}
 
-		if(flashCounter > 0)
+		/*if(flashCounter > 0)
 		{
 			flashCounter -= Time.deltaTime;
 			if(flashCounter <= 0)
 			{
 				rend.material.SetColor("_Color", storedColor);
 			}
-		}
+		}*/
 	}
 
 	public void HurtPlayer(int damageAmount)
 	{
 		currentHealth -= damageAmount;
-		flashCounter = flashLength;
-		rend.material.SetColor("_Color", Color.white);
+		//flashCounter = flashLength;
+		//rend.material.SetColor("_Color", Color.white);
 	}
 }
