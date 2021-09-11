@@ -22,7 +22,6 @@ public class CamController : MonoBehaviour
     }
     private void Update()
     {
-        playerFound = camTarget != null;
         if (playerFound)
         {
             if (camTarget.gameObject.tag == "KartBody")

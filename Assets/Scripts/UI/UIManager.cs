@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance_UI;
+    
     [Header("Scoring")]
     public float score;
     public Text scoreText;
+    
     [Header("Battery")]
     public float maxBatteryHP;
     public float batteryHP;
@@ -17,11 +19,11 @@ public class UIManager : MonoBehaviour
     public Image fill;
     public Text healthText;
     PlayerHealthManager playerHealth;
+    
     [Header("Events")]
     public GameObject BlackoutScreen;
     public bool blackout = false;
     Animator black_out_anim;
-    float fadeInSpeed, fadeOutSpeed;
     public GameObject EventScreen;
     Button eventButton;
     Text eventText;
