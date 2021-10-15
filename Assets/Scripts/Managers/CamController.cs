@@ -7,7 +7,7 @@ public class CamController : MonoBehaviour
     public static CamController cam_instance;
     public Transform camTarget;
     public List<CamTarget> targets;
-    float fovCar = 45f, fovFoot = 15f;
+    float fovCar = 65f;
     Camera cam;
     bool playerFound;
     Vector3 cameraOffset = new Vector3(0, -10, 10);
@@ -18,29 +18,19 @@ public class CamController : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+        cam.fieldOfView = fovCar;
         FindCameraTargets();
     }
     private void Update()
     {
-        if (playerFound)
-        {
-            if (camTarget.gameObject.tag == "KartBody")
-            {
-                cam.fieldOfView = fovCar;
-                Debug.Log("Car Camera");
-            }
-            else
-            if (camTarget.gameObject.tag == "Player")
-            {
-                cam.fieldOfView = fovFoot;
-                Debug.Log("Foot Camera");
-            }
-        }
+        UpdateTargets(targets[0].transform);
+        /*
         if (camTarget == null)
         {
-            Transform player = FindObjectOfType<PlayerController>().transform;
+            Transform player = FindObjectOfType<CamTarget>().transform;
             UpdateTargets(player.transform);
         }
+        */
     }
     void LateUpdate()
     {

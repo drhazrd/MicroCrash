@@ -6,19 +6,23 @@ using UnityEngine;
 public class RCController : MonoBehaviour
 {
     public Rigidbody driveCollider;
+    public LayerMask whatIsGround;
+    public Transform groundRayPoint;
     float speedInput, turnInput;
     bool grounded;
-    public LayerMask whatIsGround;
     float groundRayLength = .5f;
-    public Transform groundRayPoint;
+    float snapSpeed = 4.25f;
 
     [Header("Parameters")]
     float forwardAccel = 80f;
     float reverseAccel = 35f;
-    float turnStrength = 180;
+    float turnStrength = 120;
     float gravityForce = 10f;
     private float boostMultiplier = 1;
     private float boostlength = 1;
+    bool isDrifting;
+    private int driftDirection;
+    float driftMultiplier = 1f;
 
     [Header("Model Parts")]
     public Transform kartBody;
@@ -33,14 +37,12 @@ public class RCController : MonoBehaviour
     public float decayMultiplier;
     bool batteryActive;
 
-
     [Header("Vehicle FX")]
     public GameObject sFX;
     public ParticleSystem[] dustTrails;
     public GameObject thrusterFX;
     public float maxEmission = 25f;
     private float emissionRate;
-
 
     void Start()
     {
@@ -53,30 +55,46 @@ public class RCController : MonoBehaviour
     {
         decayMultiplier = boostMultiplier;
         speedInput = 0f;
-        batteryActive = Input.GetAxis("Vertical") != 0;
+        batteryActive = Input.GetAxis("Acceleration") != 0;
         battery.batterDecayActive = batteryActive;
+        AudioManager.audio_instance.soundEffect[3].gameObject.SetActive(batteryActive);
+        
         if (GameManager.gm_instance.movementAllowed)
         {
-            
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButtonDown("Drift") && !isDrifting && Input.GetAxis("Horizontal") != 0)
+            {
+                Drift();
+            }
+            if (Input.GetButtonUp("Drift")&&isDrifting)
+            {
+                isDrifting = false;
+            }
+            if (Input.GetButton("Boost"))
             {
                 StartCoroutine("Boost");
                 Debug.Log("Boost Triggered");
             }
-            if (Input.GetAxis("Vertical") > 0)
+            if (Input.GetAxis("Acceleration") > 0)
             {
-                speedInput = Input.GetAxis("Vertical") * forwardAccel * 1000f;
+                speedInput = Input.GetAxis("Acceleration") * forwardAccel * 1000f;
             }
-            else if (Input.GetAxis("Vertical") < 0)
+            else if (Input.GetAxis("Acceleration") < 0)
             {
-                speedInput = Input.GetAxis("Vertical") * reverseAccel * 1000f;
+                speedInput = Input.GetAxis("Acceleration") * reverseAccel * 1000f;
             }
             turnInput = Input.GetAxis("Horizontal");
         }
         if (grounded) { 
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, turnInput * turnStrength * Time.deltaTime * Input.GetAxis("Vertical"), 0f));
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, turnInput * (turnStrength*driftMultiplier) * Time.deltaTime * Input.GetAxis("Acceleration"), 0f));
+            if (isDrifting)
+            {
+                driftMultiplier = 1.5f;
+            }else if (!isDrifting)
+            {
+                driftMultiplier = 1f;
+            }
+        
         }
-
         frontLWheels.localRotation = Quaternion.Euler(frontLWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontLWheels.localRotation.eulerAngles.z);
         frontRWheels.localRotation = Quaternion.Euler(frontRWheels.localRotation.eulerAngles.x, turnInput * maxWheelTurn, frontRWheels.localRotation.eulerAngles.z);
         transform.position = driveCollider.transform.position;
@@ -89,7 +107,9 @@ public class RCController : MonoBehaviour
         if(Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround))
         {
             grounded = true;
-            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            Quaternion currentTransform = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,currentTransform,snapSpeed);
+
         }
 
         emissionRate = 0;
@@ -115,12 +135,17 @@ public class RCController : MonoBehaviour
             emissionModule.rateOverTime = emissionRate;
         }
     }
-
+    public void Drift()
+    {
+        isDrifting = true;
+        driftDirection = Input.GetAxis("Horizontal") > 0 ? 1 : 0;
+    }
     public IEnumerator Boost()
     {
         Debug.Log("Boost Activated");
         boostMultiplier = 2.5f;
         thrusterFX.SetActive(true);
+        AudioManager.audio_instance.PlaySFX(7);
         yield return new WaitForSeconds(boostlength);
         thrusterFX.SetActive(false);
         boostMultiplier = 1;

@@ -296,7 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcfdeec8b09e6484f8d8972c15d07e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 350
+  item: {fileID: 0}
+  itemMinimapImage: {fileID: 0}
 --- !u!65 &9120287378618150278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -414,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9120287379160093061}
   m_Layer: 0
-  m_Name: Battery
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,7 +438,7 @@ Transform:
   - {fileID: 9120287377997520013}
   m_Father: {fileID: 9120287378618150272}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 360, z: 0}
 --- !u!1 &9120287379777777078
 GameObject:
   m_ObjectHideFlags: 0

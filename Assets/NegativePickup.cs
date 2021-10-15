@@ -6,10 +6,9 @@ public class NegativePickup : MonoBehaviour
 {
     bool collected = false;
     float value = -85;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "KartBody")
         {
             AudioManager.audio_instance.PlaySFX(1);
             collected = true;

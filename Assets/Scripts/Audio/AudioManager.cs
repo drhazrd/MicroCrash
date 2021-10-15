@@ -41,6 +41,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixer aMixer;
 
     public AudioSource[] soundEffect;
+    public AudioSource[] ambientEffect;
 
     void Awake()
     {

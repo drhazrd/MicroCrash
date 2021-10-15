@@ -308,7 +308,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: a715c09f32bb53d439261cf087e89053, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: bee1e790be98fa74a9d8a643ddee9655, type: 2}
   - {fileID: 7400000, guid: a715c09f32bb53d439261cf087e89053, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -414,7 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9120287379160093061}
   m_Layer: 0
-  m_Name: Battery
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

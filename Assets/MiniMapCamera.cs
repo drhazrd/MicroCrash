@@ -6,26 +6,33 @@ using System;
 public class MiniMapCamera : MonoBehaviour
 {
 	Camera minicam;
-	Transform target;
+	CamController mainCam;
+	public Transform target;
 	Vector3 targetOffset = new Vector3(0,300f,0);
-
-	void Start()
-	{
+    private void Awake()
+    {
 		minicam = GetComponent<Camera>();
-		if (!target)
-		{
-			target = GameObject.FindWithTag("Player").transform;
-		}
+		mainCam = GetComponentInParent<CamController>();
+        
+    }
+    void Start()
+	{
+		this.transform.parent = null;
 	}
 
 	void Update()
 	{
-		transform.position = target.position + targetOffset;
-		if (target)
+		if (target == null)
 		{
-			FindTarget();
-			return;
+
+
+			target = mainCam.targets[0].transform;
 		}
+		else
+		{
+			transform.position = target.position + targetOffset;
+		}
+		
 		if (Input.GetKeyDown(KeyCode.U) && minicam.orthographicSize >= 20)
 		{
 			minicam.orthographic = true;
@@ -45,7 +52,7 @@ public class MiniMapCamera : MonoBehaviour
 		{
 			return;
 		}
-		Transform newTarget = GameObject.FindWithTag("Player").transform;
+		Transform newTarget = CamController.cam_instance.camTarget;
 		if (newTarget)
 		{
 			target = newTarget;

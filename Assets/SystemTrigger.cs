@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SystemTrigger : MonoBehaviour
 {
+    public int sfxID;
     private void OnTriggerEnter(Collider other)
     {
-        AudioManager.audio_instance.PlayVictory();
+        AudioManager.audio_instance.PlaySFX(sfxID);
     }
 }
