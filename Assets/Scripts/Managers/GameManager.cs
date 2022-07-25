@@ -1,38 +1,58 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 using System;
+using Cinemachine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm_instance;
-    public GameType rules;
+    public GameState gameState;
+    public CinemachineVirtualCamera cam;
+    public GameObject menus;
+    public GameObject ui;
+    public GameObject camera;
+    public GameObject miniMapCamera;
+    public List<AudioClip> bgmTracks = new List<AudioClip>(); 
     private UIManager uiManager;
     private AudioManager audioManager;
     private MenuManager menuManager;
     private CamController camManager;
     private LevelManager levelManager;
-    private PlayerController userPlayer;
+    
     public bool gameStarted;
     public bool movementAllowed;
     public bool batteryDead, playerDead, levelActive, gameTypeWon, gameTypeLost, playerOnFoot, playerInCar;
+    
     int gameTypeID;
-    public PlayerController thePlayer;
-    public enum GameType
+
+    public GameObject spawner;
+    private PlayerController userPlayer;
+    public GameObject thePlayer;
+    public List<CamTarget> targets;
+
+
+    public static event Action<GameState> OnGameStateChanged;
+
+    public enum GameState
     {
         Default,
+        Loading,
+        MainMenu,
         Sprint,
         Circuit,
         Marathon,
-        Timed
+        Timed,
+        GameOver,
+        Victory
     }
     
     void Awake()
     {
         gm_instance = this;
-        rules = GameType.Default;
-    }
-
-    void Start()
-    {
+        Instantiate(menus);
+        Instantiate(ui);
+        //Instantiate(camera);
+        Instantiate(miniMapCamera);
         uiManager = UIManager.instance_UI;
         if (uiManager == null)
         {
@@ -58,29 +78,56 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameManager: No PlayerController");
         }
-        thePlayer = userPlayer;
+        //thePlayer = userPlayer;
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        spawner.GetComponent<Spawner>().Spawn();
+        FindCameraTargets();
+    }
+
     void Update()
     {
-        UpdateGameMode(rules);
+        
     }
 
-    void UpdateGameMode(GameType mode)
+    void UpdateGameMode(GameState newState)
     {
-        if (rules == GameType.Default) { gameTypeID = 0; }
-        if (rules == GameType.Circuit) { gameTypeID = 1; }
-        if (rules == GameType.Marathon) { gameTypeID = 2; }
-        if (rules == GameType.Sprint) { gameTypeID = 3; }
-        if (rules == GameType.Timed) { gameTypeID = 4; }
+        gameState = newState;
+        switch (newState)
+        {
+            case GameState.Default:
+                break;
+            case GameState.Loading:
+                break;
+            case GameState.MainMenu:
+                break;
+            case GameState.Marathon:
+                break;
+            case GameState.Circuit:
+                break;
+            case GameState.Sprint:
+                break;
+            case GameState.Timed:
+                break;
+            case GameState.Victory:
+                break;
+            case GameState.GameOver:
+                break;
+
+        }
+        OnGameStateChanged?.Invoke(newState);
     }
 
     public IEnumerator GameStart()
     {
         yield return new WaitForSeconds(4f);
-        AudioManager.audio_instance.PlayBGM();
+        AudioManager.audio_instance.PlayBGM(bgmTracks[0]);
+    }
+    void FindCameraTargets()
+    {
+        targets.AddRange(FindObjectsOfType<CamTarget>());
     }
 
-    
 }

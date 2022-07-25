@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
@@ -8,6 +9,9 @@ public class DebugMenu : MonoBehaviour
 {
 	public static bool GameIsPaused = false;
 	public GameObject pausedUI;
+
+
+
 
     void Awake()
     {
@@ -51,7 +55,5 @@ public class DebugMenu : MonoBehaviour
 	{
 		Application.Quit();
 	}
-
-
-
+	
 }

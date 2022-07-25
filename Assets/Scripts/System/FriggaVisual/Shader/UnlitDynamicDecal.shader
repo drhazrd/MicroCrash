@@ -1,8 +1,9 @@
 ﻿Shader "FiggaVisual/Unlit Dynamic Decal"{
 	//show values to edit in inspector
 	Properties{
-		[HDR] _Color("Tint", Color) = (0, 0, 0, 1)
+		[HDR] _Color("Color", Color) = (0, 0, 0, 1)
 		_MainTex("Texture", 2D) = "white" {}
+		//[HDR] _Glow Color("Glow Color", Color) = (0, 0, 0, 1)
 	}
 
 		SubShader{

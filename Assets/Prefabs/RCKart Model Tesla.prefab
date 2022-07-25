@@ -8931,7 +8931,7 @@ MonoBehaviour:
   currbatteryLife: 0
   batteryDead: 0
   batterDecayActive: 1
-  infinityBattery: 0
+  infinityBattery: 1
 --- !u!114 &758880860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9031,7 +9031,7 @@ GameObject:
   - component: {fileID: 3137694946208935798}
   m_Layer: 0
   m_Name: RCKart Model Tesla
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20375,11 +20375,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thruster
       objectReference: {fileID: 0}
-    - target: {fileID: 6188684789685791491, guid: 2b6f3039025814b44815ab2fef3ed329,
-        type: 3}
-      propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8919729475079875469, guid: 2b6f3039025814b44815ab2fef3ed329,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20433,6 +20428,11 @@ PrefabInstance:
     - target: {fileID: 8919729475079875469, guid: 2b6f3039025814b44815ab2fef3ed329,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188684789685791491, guid: 2b6f3039025814b44815ab2fef3ed329,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

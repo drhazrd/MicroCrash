@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager:MonoBehaviour
 {
     public static LevelManager lv_instance { get; internal set; }
-    
+    public AudioClip victorySound;
     public float lv_score, minLvScore = 1500;
     public int maxLaps, currentlLaps;
     float raceTimer,timeAttackTimer,timeLimit, timeCap;
@@ -54,7 +54,7 @@ public class LevelManager:MonoBehaviour
          }
         else if(win)
         {
-            AudioManager.audio_instance.PlayVictory();
+            AudioManager.audio_instance.PlayVictory(victorySound);
             Debug.Log("Win");
             UIManager.instance_UI.EventScreenUpdate("YOU WIN!",1,lv_score);
         }
@@ -72,7 +72,7 @@ public class LevelManager:MonoBehaviour
          }
         else if(win)
         {
-            AudioManager.audio_instance.PlayVictory();
+            AudioManager.audio_instance.PlayVictory(victorySound);
             Debug.Log("Win");
             UIManager.instance_UI.EventScreenUpdate("RACE OVER, THAT WAS A GREAT JOB ",1,lv_score);
         }
@@ -91,7 +91,7 @@ public class LevelManager:MonoBehaviour
          }
         else if(win)
         {
-            AudioManager.audio_instance.PlayVictory();
+            AudioManager.audio_instance.PlayVictory(victorySound);
             Debug.Log("Win");
             UIManager.instance_UI.EventScreenUpdate("0% CHARGE LEFT, THAT WAS A GREAT JOB",1,lv_score);
         }

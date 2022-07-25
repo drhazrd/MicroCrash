@@ -13,11 +13,9 @@ public class GunController : MonoBehaviour {
 
 	public Transform firePoint;
 
-	// Use this for initialization
 	void Start () {
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if(isFiring)
 		{
@@ -31,5 +29,6 @@ public class GunController : MonoBehaviour {
 		} else {
 			shotCounter = 0;
 		}
+		isFiring = Input.GetButtonDown("Fire1");
 	}
 }

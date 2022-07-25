@@ -1,9 +1,19 @@
 fileFormatVersion: 2
 guid: 96368dbf57eb87b46965c7ba71703bc6
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Asphalt
+    second: {fileID: 2100000, guid: 46e6a1891cc7a0a44a993df4adc44d7d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Light_Gray
+    second: {fileID: 2100000, guid: e4776856405faee4aa208bc46325aaef, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -38,6 +48,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1

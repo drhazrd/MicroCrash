@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject character;
+    public GameObject spawnCharacter;
+    public GameObject spawnObject;
     private Transform spawnPoint;
-    void Start()
+    public bool onlyObject;
+
+    private void Start()
     {
-        Instantiate(character, this.transform.position, this.transform.rotation);
+        Spawn();
+    }
+    public void Spawn()
+    {
+        Instantiate(spawnCharacter, this.transform.position, this.transform.rotation);
     }
 }
 

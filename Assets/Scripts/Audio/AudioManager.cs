@@ -37,7 +37,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager audio_instance;
     //public Tracks[] tracks;
-    public AudioSource bgm, victory, defeat;
+    public AudioClip bgm, victory, defeat;
+    public AudioSource audioSource;
     public AudioMixer aMixer;
 
     public AudioSource[] soundEffect;
@@ -68,31 +69,33 @@ public class AudioManager : MonoBehaviour
         }
         Debug.LogWarning("AudioManager: Sound not found in list "+_name+".");*/
     }
-    public void StopBGM()
+    public void StopAudio()
     {
-        bgm.Stop();
+        audioSource.Stop();
     }
-    public void PlayBGM()
+    public void PlayAudio(AudioClip sound)
     {
-        bgm.Play();
+        StopAudio();
+        audioSource.clip = sound;
+        audioSource.Play();
     }
-    public void PlayVictory()
+    public void PlayBGM(AudioClip bgmClip)
     {
-        StopBGM();
-        victory.Play();
+        StopAudio();
+        audioSource.clip = bgmClip;
+        PlayAudio(bgmClip);
     }
-    public void StopVictory()
+    public void PlayVictory(AudioClip victoryClip)
     {
-        victory.Stop();
+        StopAudio();
+        PlayAudio(victoryClip);
     }
-    public void PlayDefeat()
+
+    public void PlayDefeat(AudioClip defeatClip)
     {
-        StopBGM();
-        defeat.Play();
-    }
-    public void StopDefeat()
-    {
-        defeat.Stop();
+        StopAudio();
+        PlayAudio(defeatClip);
+        audioSource.Play();
     }
     public void PlaySFX(int sfxNum)
     {

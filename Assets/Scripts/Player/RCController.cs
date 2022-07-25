@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RCController : MonoBehaviour
 {
+    public int playerNumber;
+    public InputHandler input;
     public Rigidbody driveCollider;
     public LayerMask whatIsGround;
     public Transform groundRayPoint;
@@ -30,6 +32,12 @@ public class RCController : MonoBehaviour
     private float dragOnGround = 3f;
     private float maxWheelTurn = 35f;
 
+    [Header("Player Data")]
+    public int playerExperience;
+    public int playerLevel;
+    public int playerCurrency;
+
+
     [Header("Battery Data")]
     BatteryManager battery;
     public bool batteryLife;
@@ -46,9 +54,10 @@ public class RCController : MonoBehaviour
 
     void Start()
     {
+        EventManager.current.onPickup+= UpdateStats;
         driveCollider.transform.parent = null;
         thrusterFX.SetActive(false);
-        battery = GetComponent<BatteryManager>();
+        //battery = GetComponent<BatteryManager>();
     }
 
     void Update()
@@ -56,7 +65,7 @@ public class RCController : MonoBehaviour
         decayMultiplier = boostMultiplier;
         speedInput = 0f;
         batteryActive = Input.GetAxis("Acceleration") != 0;
-        battery.batterDecayActive = batteryActive;
+        //battery.batterDecayActive = batteryActive;
         AudioManager.audio_instance.soundEffect[3].gameObject.SetActive(batteryActive);
         
         if (GameManager.gm_instance.movementAllowed)
@@ -167,6 +176,10 @@ public class RCController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position - (transform.up * 2));
+    }
+    private void UpdateStats(string name, int newCurrencyValue, int newExperienceValue)
+    {
+
     }
 }
 

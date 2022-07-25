@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CamController : MonoBehaviour
 {
     public static CamController cam_instance;
@@ -9,42 +8,49 @@ public class CamController : MonoBehaviour
     public List<CamTarget> targets;
     float fovCar = 65f;
     Camera cam;
+    GameManager gameManager;
     bool playerFound;
     Vector3 cameraOffset = new Vector3(0, -10, 10);
     private void Awake()
     {
-        cam_instance = this;
+        if (cam_instance == null)
+        {
+            cam_instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        gameManager = GameManager.gm_instance;
     }
     void Start()
     {
         cam = GetComponent<Camera>();
         cam.fieldOfView = fovCar;
-        FindCameraTargets();
     }
     private void Update()
     {
-        UpdateTargets(targets[0].transform);
-        /*
-        if (camTarget == null)
+        if (targets.Count < 1)
         {
-            Transform player = FindObjectOfType<CamTarget>().transform;
-            UpdateTargets(player.transform);
+            camTarget = gameManager.targets[0].transform;
         }
-        */
     }
     void LateUpdate()
+    {
+        if (camTarget != null)
+        {
+            UpdateTargetPOS();
+        }
+    }
+    public void UpdateTargetPOS()
     {
         transform.position = camTarget.position - cameraOffset;
         transform.rotation = camTarget.rotation;
         transform.LookAt(camTarget);
     }
-    void FindCameraTargets()
-    {
-        targets.AddRange(FindObjectsOfType<CamTarget>());
-    }
     public void UpdateTargets(Transform newTarget)
     {
         camTarget = newTarget;
-         
+        
     }
 }
